@@ -1,0 +1,1 @@
+web: gunicorn devlokwebsite.wsgi:application

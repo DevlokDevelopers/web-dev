@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devlok - About Us</title>
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+
+</head>
+<body style="background-color: #fff;">
+    <style>
+        /* ===== Base Styles ===== */
+        :root {
+            --primary-color: #0047AB;
+            /* Devlok blue */
+            --secondary-color: #333;
+            --accent-color: #f5a623;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: #222;
+            padding: 8px 0;
+            font-size: 13px;
+        }
+
+        .top-bar .container-h {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .contact-info a {
+            color: #fff;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+
+        .contact-info a:hover {
+            color: var(--accent-color);
+        }
+
+        .contact-info i {
+            margin-right: 5px;
+        }
+
+        .social-links a {
+            color: #fff;
+            margin-left: 15px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Main Header */
+        .header {
+            background: #0350a3;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header .container-h {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 35px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 2px;
+            line-height: 1.7;
+        }
+
+        .logo-tagline {
+            font-size: 15px;
+            color: #ffffff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: -5px;
+            margin-inline-start: 27px;
+
+        }
+
+        /* Navigation */
+        .nav-list {
+            display: flex;
+            gap: 45px;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: rgb(255, 255, 255);
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+            text-decoration: none;
+        }
+
+        .nav-link.active,
+        .nav-link:hover {
+            color: #f5a623;
+            border-bottom: 2px solid #ffffff;
+            transition: all 0.3s ease;
+        }
+
+
+        /* Dropdown Menu */
+    .dropdown {
+        position: relative;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: #ffffff;
+        min-width: 200px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s;
+        z-index: 100;
+    }
+
+    .dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .dropdown-menu li {
+        border-bottom: 1px solid #eee;
+    }
+
+    .dropdown-menu a {
+        display: block;
+        padding: 12px 15px;
+        color: #555;
+        transition: all 0.3s;
+    }
+
+    .dropdown-menu a:hover {
+        background: #f9f9f9;
+        color: white;
+        padding-left: 20px;
+    }
+
+    /* Mobile Menu Toggle */
+    .toggle-btn {
+        display: none;
+        background: none;
+        border: none;
+        width: 30px;
+        cursor: pointer;
+        padding: 5px;
+    }
+
+    .bar {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: white;
+        margin: 6px 0;
+        transition: all 0.3s;
+    }
+
+    /* Mobile Menu - MODIFIED for top-to-bottom transition */
+    .mobile-menu {
+        position: fixed;
+        top: -100%; /* Changed from left: -100% to top: -100% */
+        left: 0;    /* Set left to 0 */
+        width: 100%; /* Changed to full width */
+        height: 100vh;
+        background: #030303df;
+        z-index: 1001;
+        transition: all 0.4s;
+        overflow-y: auto;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Changed shadow direction */
+    }
+
+    .mobile-menu.active {
+        top: 0; /* Changed from left: 0 to top: 0 */
+    }
+
+    .mobile-menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid #ffffff00;
+    }
+
+    .mobile-logo {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: white;
+        text-decoration: none;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: #ffffff;
+        cursor: pointer;
+    }
+
+    .mobile-nav-list {
+        padding: 20px;
+        list-style: none;
+        margin: 0;
+    }
+
+    .mobile-nav-link {
+        display: block;
+        padding: 12px 0;
+        color: #ffffff;
+        font-weight: 600;
+        border-bottom: 1px solid #eeeeee00;
+        text-decoration: none;
+    }
+
+    .mobile-dropdown-menu {
+        padding-left: 15px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s;
+    }
+
+    .mobile-dropdown.active .mobile-dropdown-menu {
+        max-height: 300px;
+    }
+
+    .mobile-contact {
+        padding: 20px;
+        border-top: 1px solid #ffffff00;
+    }
+
+    .mobile-contact a {
+        display: block;
+        color: #ffffff;
+        margin-bottom: 15px;
+        text-decoration: none;
+    }
+
+     /* Header Social Links */
+    .header-social-links {
+        display: flex;
+        align-items: center;
+        margin-right: 5px;
+    }
+    
+    .header-social-links a {
+        color: #0350a3;
+        font-size: 16px;
+        margin-left: 10px;
+        transition: color 0.3s ease;
+        text-decoration: none;
+    }
+    
+    .header-social-links a:hover {
+        color: #023a7a;
+    }
+    
+    .header-social-links .contact-link {
+        display: flex;
+        align-items: center;
+        margin-right: 5px;
+    }
+    
+    .header-social-links .contact-link i {
+        margin-right: 2px;
+    }
+    
+    .header-social-links .social-icon {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: #f5f5f5;
+        transition: all 0.3s ease;
+    }
+    
+    .header-social-links .social-icon:hover {
+        background-color: #0350a3;
+        color: white;
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+        .header-social-links {
+            display: none; /* Hide on mobile */
+        }
+    }
+    /* Responsive */
+    @media (max-width: 992px) {
+        .top-bar {
+            flex-direction: row;
+            justify-content: space-evenly;
+            gap: 20px;
+            display: none;
+        }
+
+        .contact-info,
+        .social-links {
+            width: 100%;
+            text-align: start;
+        }
+
+        .contact-info a {
+            margin: 0 10px;
+        }
+
+        .social-links a {
+            margin: 0 8px;
+        }
+
+        .nav {
+            display: none;
+        }
+
+        .toggle-btn {
+            display: block;
+        }
+    }
+    </style>
+
+  <header class="header">
+    <div class="container-h">
+        <!-- Text Logo -->
+        <a href="/" class="logo">
+            <span class="logo-text">DEVLOK</span>
+            <span class="logo-tagline">Developers</span>
+        </a>
+        
+        <!-- Desktop Navigation -->
+        <nav class="nav">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="/" class="nav-link">HOME</a></li>
+                <li class="nav-item"><a href="{% url 'about'%}" class="nav-link">ABOUT</a></li>
+                <li class="nav-item dropdown">
+                    <a href="{% url 'services'%}" class="nav-link">SERVICES </a>
+                </li>
+                <li class="nav-item"><a href="#contact" class="nav-link">CONTACT US</a></li>
+            </ul>
+        </nav>
+        <div class="header-social-links">
+           
+            <a href="https://www.instagram.com/devlokdevelopers?igsh=MXhrbXQwcTBiNWpodQ==" class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/sanoop-vijayakumar-14b925283?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" class="social-icon">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="mailto:info@devlokdevelopers.com?subject=Property%20Inquiry&body=Hello%20DEVLOK%2C%20I%27m%20interested%20in%20your%20properties.%20Please%20provide%20more%20details." class="social-icon">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="https://wa.me/+919645129777?text=I%20would%20like%20to%20know%20about%20more!" class="social-icon">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </div>
+        <!-- Mobile Toggle -->
+        <button class="toggle-btn" aria-label="Toggle navigation">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </div>
+</header>
+</section>
+<!-- Mobile Menu -->
+<div class="mobile-menu" style="text-align: center;">
+    <div class="mobile-menu-header" style="justify-content: center;">
+        <a href="/" class="logo"
+            style="background-color: #0350a3; padding: 20px 50px 20px 50px; border-radius: 8px;">
+            <span class="logo-text" style="color: #ffffff; text-align: center;">DEVLOK</span>
+            <span class="logo-tagline" style="color: #ffffff; text-align: start;">Developers</span>
+        </a>
+        <!-- Added close button -->
+        <div>
+            <button class="close-btn" aria-label="Close menu" style="margin-left: 10px;">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <ul class="mobile-nav-list">
+        <li><a href="/" class="mobile-nav-link">HOME</a></li>
+        <li><a href="{% url 'about'%}" class="mobile-nav-link">ABOUT</a></li>
+        <li class="mobile-dropdown">
+            <a href="{% url 'services'%}" class="mobile-nav-link">SERVICES </a>
+        </li>
+        <li><a href="#contact" class="mobile-nav-link">CONTACT US</a></li>
+    </ul>
+    <div class="mobile-contact">
+        <a href="https://wa.me/+919645129777?text=I%20would%20like%20to%20know%20about%20more!"><i
+                class="fab fa-whatsapp"></i> +91 96451 29777</a>
+        <a
+            href="mailto:info@devlokdevelopers.com?subject=Property%20Inquiry&body=Hello%20DEVLOK%2C%20I%27m%20interested%20in%20your%20properties.%20Please%20provide%20more%20details."><i
+                class="fas fa-envelope"></i> info@devlokdevelopers.com</a>
+    </div>
+</div>
+    
+    <!-- Hero Section -->
+    <div class="container">
+        <section class="hero">
+            <div class="hero-image" style="background-color:transparent;">
+                <img src="{% static 'images/devlok.jpeg' %}" alt="Devlok Real Estate" class="hero-logo">
+            </div>
+            <div class="hero-content">
+                <h1 class="hero-title">YOUR TRUSTED<br>REAL ESTATE PARTNER</h1>
+                <p class="hero-text">
+                    Welcome to devlok, where your real estate aspirations meet expert guidance and personalized service.
+                    Our journey in the real estate industry has been marked by a deep commitment to excellence, a passion
+                    for helping clients achieve their goals, and an unwavering dedication to professionalism.
+                </p>
+                <div class="divider"></div>
+                <div class="story-section">
+                    <h2 class="story-title">OUR STORY</h2>
+                    <p class="story-text">
+                        Founded by a team of seasoned real estate professionals, devlok was born out of a shared vision:
+                        to create a real estate experience that prioritizes the client's needs above all else. Our founders
+                        understood that the world of real estate can be complex, often daunting, and filled with opportunities
+                        as well as challenges. They set out to build a real estate agency that simplifies the process and
+                        empowers clients with the knowledge and resources needed to make informed decisions.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const toggleBtn = document.querySelector('.toggle-btn');
+        const closeBtn = document.querySelector('.close-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        toggleBtn.addEventListener('click', function() {
+            mobileMenu.classList.add('active');
+        });
+        
+        closeBtn.addEventListener('click', function() {
+            mobileMenu.classList.remove('active');
+        });
+        
+        // For mobile dropdown submenus (if needed)
+        const mobileDropdowns = document.querySelectorAll('.mobile-dropdown');
+        mobileDropdowns.forEach(dropdown => {
+            const link = dropdown.querySelector('.mobile-nav-link');
+            link.addEventListener('click', function(e) {
+                dropdown.classList.toggle('active');
+            });
+        });
+    });
+    </script>
+
+    <!-- Features Section -->
+    <section class="features-section" style="background-color: #0b4d83;">
+        <div class="container">
+            <h2 class="features-title">WHY CHOOSE DEVLOK</h2>
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-box">
+                    <h3 class="feature-title">EXPERTISE</h3>
+                    <p class="feature-text">
+                        Our team comprises industry experts with in-depth knowledge of local markets. We leverage this
+                        expertise to provide you with an advantage in your real estate endeavors.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-box">
+                    <h3 class="feature-title">CLIENT-CENTRIC APPROACH</h3>
+                    <p class="feature-text">
+                        Your needs are our top priority. We listen, understand, and tailor our services to align with
+                        your unique goals, whether you're buying, selling, or investing.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-box">
+                    <h3 class="feature-title">TRANSPARENCY</h3>
+                    <p class="feature-text">
+                        We believe that transparency is key to building trust. We provide honest, straightforward advice
+                        and keep you informed throughout your real estate journey.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-box">
+                    <h3 class="feature-title">INNOVATION</h3>
+                    <p class="feature-text">
+                        We embrace technology and modern tools to enhance your experience. Our online platform offers
+                        seamless access to property listings, market insights, and resources.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-box">
+                    <h3 class="feature-title">COMMUNITY FOCUS</h3>
+                    <p class="feature-text">
+                        We are more than just a real estate agency; we are proud contributors to the communities we
+                        serve. Our commitment extends to supporting the growth and well-being of these areas.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-box">
+                    <h3 class="feature-title">TRUSTED ADVISORS</h3>
+                    <p class="feature-text">
+                        Our team is composed of trusted advisors who are dedicated to your success. We go beyond being
+                        mere agents; we serve as your partners in making informed real estate decisions.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- footer section -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-section">
+                <h3>Get in Touch</h3>
+                    <div class="subscribe-form">
+                        <p class="input">Enquiry Form</p>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-dHok_FwSglGODcHUytu085-fOsH4ON_4dNo5philQnxWvQ/viewform?pli=1" ><button> <i class="fas fa-arrow-right"></i></button></a>
+                    </div>
+            </div>
+           
+            <div class="footer-section">
+                <h3>Discover</h3>
+                <ul class="footer-links" >
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'about' %}">About</a></li>
+                    <li><a href="{% url 'services' %}">Services</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section" id="contact">
+                <h3>Contact Us</h3>
+               <a  style="text-decoration: none; color: white; "  href="https://wa.me/+919645129777?text=I%20would%20like%20to%20know%20about%20more!"><p  >+91 96451 29777</p> </a>
+               <a  style="text-decoration: none; color: white;" href="tel:+919846845777"><p  >+91 98468 45777</p> </a>
+               <a  style="text-decoration: none; color: white;"  href="mailto:info@devlokdevelopers.com?subject=Property%20Inquiry&body=Hello%20DEVLOK%2C%20I%27m%20interested%20in%20your%20properties.%20Please%20provide%20more%20details."><p  >info@devlokdevelopers.com</p></a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Our Address</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Nadathara Panchayath Building,<br>
+                        XII/479 Krishnan Master Nagar
+                    </a></li>
+                    <li><a href="#">Eravimangalam P.O, Thrissur - 680 751</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <div class="footer-logo">FOLLOW US</div>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/devlokdevelopers?igsh=MXhrbXQwcTBiNWpodQ==" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/sanoop-vijayakumar-14b925283?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="container footer-bottom" >
+            <p>Copyright © 2025. All rights reserved.</p>
+        </div>
+    </footer>
+   
+    
+    <style>
+            /* Footer Section */
+            .footer {
+                background-color: #0047AB;
+                color: #fff;
+                padding: 80px 0 30px;
+            }
+
+            .footer-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 40px;
+                margin-bottom: 40px;
+            }
+
+            .footer-logo {
+                color: #fff;
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+
+            .footer-section h3 {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+
+            .footer-links {
+                list-style: none;
+            }
+
+            .footer-links li {
+                margin-bottom: 6px;
+            }
+
+            .footer-links a {
+                color: #ffffff;
+                text-decoration: none;
+                font-size: 14px;
+                transition: color 0.3s ease;
+            }
+
+            .footer-links a:hover {
+                color: #fff;
+            }
+            .subscribe-form {
+                display: flex;
+                margin-top: 15px;
+            }
+
+            .subscribe-form .input {
+                padding: 10px;
+                border: none;
+                border-radius: 4px 0 0 4px;
+                width: 70%;
+                background-color: #fff;
+                color:#003f7d;
+                font-family: 'Arial', sans-serif;
+                text-align: center;
+                font-weight: 600;
+            }
+
+            .subscribe-form button {
+                background-color: #0066cc;
+                color: white;
+                border: none;
+                border-radius: 0 4px 4px 0;
+                padding: 14px 30px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            .subscribe-form button:hover {
+                background-color: #0055aa;
+            }
+
+            .footer-social {
+                display: flex;
+                gap: 15px;
+                margin-top: 20px;
+                
+            }
+
+            .social-icon {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, 0.1);
+                display: flex;
+                color: rgb(255, 255, 255);
+                align-items: center;
+                justify-content: center;
+                transition: background-color 0.3s ease;
+            }
+
+            .social-icon:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+
+            .footer-bottom {
+                text-align: center;
+                padding-top: 20px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                font-size: 12px;
+                color: #ffffff;
+            }
+            
+
+            /* Responsive Adjustments */
+            @media (max-width: 768px) {
+                .testimonial-container {
+                    flex-direction: column;
+                }
+                
+                .brands-container {
+                    justify-content: center;
+                }
+                
+                .articles-grid {
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                }
+                
+                .footer-container {
+                    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                }
+            }
+
+            @media (max-width: 480px) {
+                .rating-box {
+                    flex-direction: column;
+                    gap: 15px;
+                    align-items: center;
+                }
+                
+                .articles-grid {
+                    grid-template-columns: 1fr;
+                }
+                
+                .footer-container {
+                    grid-template-columns: 1fr;
+                }
+            }
+    </style>
+     <div class="whatsapp-float">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+   
+    <style>
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #0047ab95;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.43);
+            z-index: 99;
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #0047ab95;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.43);
+            z-index: 99;
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        .whatsapp-float img {
+            width: 60px;
+            height: 60px;
+        }
+    </style>
+     <a href="https://wa.me/+919645129777?text=I%20would%20like%20to%20know%20about%20more!" target="_blank" class=" back-to-top">
+        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp Chat" />
+    </a>
+    <script>
+        document.querySelector('.whatsapp-float').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+    </script>
+    
+</body>
+</html>

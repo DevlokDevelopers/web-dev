@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEVLOK Real Estate</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Before closing </body> -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+</head>
+
+<body>
+
+    <script>
+        // Initialize Swiper after DOM loads
+        document.addEventListener('DOMContentLoaded', function () {
+            const heroSwiper = new Swiper('.hero-carousel', {
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                // Optional: Parallax effect
+                parallax: true,
+                // Optional: Speed
+                speed: 1000,
+            });
+
+            // Update your mousemove effect for Swiper slides
+            heroSwiper.on('slideChange', function () {
+                const activeSlide = document.querySelector('.swiper-slide-active');
+                const heroImg = activeSlide.querySelector('.hero-image');
+                const shapes = activeSlide.querySelectorAll('.shape');
+            });
+
+            const headingText = document.querySelector('.split-text');
+            const text = headingText.textContent;
+            const words = text.split(' ');
+
+            headingText.innerHTML = '';
+            let charIndex = 0;
+            words.forEach((word, wordIndex) => {
+                const wordSpan = document.createElement('span');
+                wordSpan.className = 'word';
+                wordSpan.style.display = 'inline-block';
+                wordSpan.style.whiteSpace = 'nowrap';
+
+                const chars = word.split('');
+                chars.forEach((char) => {
+                    const charSpan = document.createElement('span');
+                    charSpan.textContent = char;
+                    charSpan.className = 'char';
+                    charSpan.style.display = 'inline-block';
+                    charSpan.style.transform = 'translateY(100%)';
+                    charSpan.style.opacity = '0';
+                    charSpan.style.animation = `charReveal 1s forwards ${0.05 * charIndex}s`;
+                    wordSpan.appendChild(charSpan);
+                    charIndex++;
+                });
+
+                if (wordIndex < words.length - 1) {
+                    const spaceSpan = document.createElement('span');
+                    spaceSpan.textContent = '\u00A0';
+                    spaceSpan.style.display = 'inline';
+                    headingText.appendChild(spaceSpan);
+                }
+
+                headingText.appendChild(wordSpan);
+            });
+
+
+            // Scroll handling for hero content and header color theme
+            function checkScroll() {
+                const heroContent = document.querySelector('.hero-content');
+                const header = document.querySelector('.header');
+                const heroSection = document.querySelector('.hero');
+                const heroHeight = heroSection.offsetHeight;
+
+                // Hero content scroll effect
+                if (window.scrollY > 50) {
+                    heroContent.classList.add('scrolled');
+                } else {
+                    heroContent.classList.remove('scrolled');
+                }
+
+                // Header color theme toggle
+                if (window.scrollY > heroHeight - 80) { // 80px is header height
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            }
+
+            window.addEventListener('scroll', checkScroll);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleBtn = document.querySelector('.toggle-btn');
+            const closeBtn = document.querySelector('.close-btn');
+            const mobileMenu = document.querySelector('.mobile-menu');
+
+            toggleBtn.addEventListener('click', function () {
+                mobileMenu.classList.add('active');
+            });
+
+            closeBtn.addEventListener('click', function () {
+                mobileMenu.classList.remove('active');
+            });
+
+            // For mobile dropdown submenus (if needed)
+            const mobileDropdowns = document.querySelectorAll('.mobile-dropdown');
+            mobileDropdowns.forEach(dropdown => {
+                const link = dropdown.querySelector('.mobile-nav-link');
+                link.addEventListener('click', function (e) {
+                    dropdown.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+
+    <style>
+        /* Existing styles */
+        .reveal-text {
+            overflow: hidden;
+            position: relative;
+            width: 97%;
+            text-align: left;
+            margin: 0 auto;
+        }
+
+        .split-text {
+            font-size: clamp(1rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 0;
+            line-height: 1.9;
+            color: white;
+            display: inline-block;
+            word-break: normal;
+            overflow-wrap: break-word;
+            hyphens: none;
+            white-space: normal;
+        }
+
+        .word {
+            display: inline-block;
+            white-space: nowrap;
+            margin-right: 0em;
+        }
+
+        .char {
+            display: inline-block;
+        }
+
+        @keyframes charReveal {
+            0% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .hero-carousel {
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .swiper-slide {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mobile-img {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .desktop-img {
+                display: none;
+            }
+
+            .mobile-img {
+                display: block;
+            }
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+    <style>
+        /* ===== Base Styles ===== */
+        :root {
+            --primary-color: #0047AB;
+            /* Devlok blue */
+            --secondary-color: #333;
+            --accent-color: #f5a623;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: #222;
+            padding: 8px 0;
+            font-size: 13px;
+        }
+
+        .top-bar .container-h {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .contact-info a {
+            color: #fff;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+
+        .contact-info a:hover {
+            color: var(--accent-color);
+        }
+
+        .contact-info i {
+            margin-right: 5px;
+        }
+
+        .social-links a {
+            color: #fff;
+            margin-left: 15px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Main Header */
+        .header {
+            background: #0350a3;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header .container-h {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+        }
+
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 35px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 2px;
+            line-height: 1.7;
+        }
+
+        .logo-tagline {
+            font-size: 15px;
+            color: #ffffff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: -5px;
+            margin-inline-start: 27px;
+
+        }
+
+        /* Navigation */
+        .nav-list {
+            display: flex;
+            gap: 45px;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: rgb(255, 255, 255);
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+            text-decoration: none;
+        }
+
+        .nav-link.active,
+        .nav-link:hover {
+            color: #f5a623;
+            border-bottom: 2px solid #ffffff;
+            transition: all 0.3s ease;
+        }
+
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dropdown-menu li {
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 15px;
+            color: #555;
+            transition: all 0.3s;
+        }
+
+        .dropdown-menu a:hover {
+            background: #f9f9f9;
+            color: white;
+            padding-left: 20px;
+        }
+
+        /* Mobile Menu Toggle */
+        .toggle-btn {
+            display: none;
+            background: none;
+            border: none;
+            width: 30px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .bar {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: white;
+            margin: 6px 0;
+            transition: all 0.3s;
+        }
+
+        /* Mobile Menu - MODIFIED for top-to-bottom transition */
+        .mobile-menu {
+            position: fixed;
+            top: -100%;
+            /* Changed from left: -100% to top: -100% */
+            left: 0;
+            /* Set left to 0 */
+            width: 100%;
+            /* Changed to full width */
+            height: 100vh;
+            background: #030303df;
+            z-index: 1001;
+            transition: all 0.4s;
+            overflow-y: auto;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            /* Changed shadow direction */
+        }
+
+        .mobile-menu.active {
+            top: 0;
+            /* Changed from left: 0 to top: 0 */
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #ffffff00;
+        }
+
+        .mobile-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .mobile-nav-list {
+            padding: 20px;
+            list-style: none;
+            margin: 0;
+        }
+
+        .mobile-nav-link {
+            display: block;
+            padding: 12px 0;
+            color: #ffffff;
+            font-weight: 600;
+            border-bottom: 1px solid #eeeeee00;
+            text-decoration: none;
+        }
+
+        .mobile-dropdown-menu {
+            padding-left: 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s;
+        }
+
+        .mobile-dropdown.active .mobile-dropdown-menu {
+            max-height: 300px;
+        }
+
+        .mobile-contact {
+            padding: 20px;
+            border-top: 1px solid #ffffff00;
+        }
+
+        .mobile-contact a {
+            display: block;
+            color: #ffffff;
+            margin-bottom: 15px;
+            text-decoration: none;
+        }
+
+        /* Header Social Links */
+        .header-social-links {
+            display: flex;
+            align-items: center;
+            margin-right: 5px;
+        }
+
+        .header-social-links a {
+            color: #0350a3;
+            font-size: 16px;
+            margin-left: 10px;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .header-social-links a:hover {
+            color: #023a7a;
+        }
+
+        .header-social-links .contact-link {
+            display: flex;
+            align-items: center;
+            margin-right: 5px;
+        }
+
+        .header-social-links .contact-link i {
+            margin-right: 2px;
+        }
+
+        .header-social-links .social-icon {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            transition: all 0.3s ease;
+        }
+
+        .header-social-links .social-icon:hover {
+            background-color: #0350a3;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .header-social-links {
+                display: none;
+                /* Hide on mobile */
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .top-bar {
+                flex-direction: row;
+                justify-content: space-evenly;
+                gap: 20px;
+                display: none;
+            }
+
+            .contact-info,
+            .social-links {
+                width: 100%;
+                text-align: start;
+            }
+
+            .contact-info a {
+                margin: 0 10px;
+            }
+
+            .social-links a {
+                margin: 0 8px;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .toggle-btn {
+                display: block;
+            }
+        }
+    </style>
+<section class="header-section">
+        <header class="header">
+            <div class="container-h">
+                <!-- Text Logo -->
+                <a href="/" class="logo">
+                    <span class="logo-text">DEVLOK</span>
+                    <span class="logo-tagline">Developers</span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="/" class="nav-link">HOME</a></li>
+                        <li class="nav-item"><a href="{% url 'about'%}" class="nav-link">ABOUT</a></li>
+                        <li class="nav-item dropdown">
+                            <a href="{% url 'services'%}" class="nav-link">SERVICES</a>
+                        </li>
+                        <li class="nav-item"><a href="#contact" class="nav-link">CONTACT US</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header-social-links">
+                    <a href="https://www.instagram.com/devlokdevelopers?igsh=MXhrbXQwcTBiNWpodQ==" class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/sanoop-vijayakumar-14b925283?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" class="social-icon">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="mailto:info@devlokdevelopers.com?subject=Property%20Inquiry&body=Hello%20DEVLOK%2C%20I%27m%20interested%20in%20your%20properties.%20Please%20provide%20more%20details." class="social-icon">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://wa.me/+919645129777?text=I%20would%20like%20to%20know%20about%20more!" class="social-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+                
+                <!-- Mobile Toggle -->
+                <button class="toggle-btn" aria-label="Toggle navigation">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </header>
+    </section>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" style="text-align: center;">
+        <div class="mobile-menu-header" style="justify-content: center;">
+            <a href="/" class="logo" style="background-color: #0350a3; padding: 20px 50px 20px 50px; border-radius: 8px;">
+                <span class="logo-text" style="color: #ffffff; text-align: center;">DEVLOK</span>
+                <span class="logo-tagline" style="color: #ffffff; text-align: start;">Developers</span>
+            </a>
+            <div>
+                <button class="close-btn" aria-label="Close menu" style="margin-left: 10px;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <ul class="mobile-nav-list">
+            <li><a href="/" class="mobile-nav-link">HOME</a></li>
+            <li><a href="{% url 'about'%}" class="mobile-nav-link">ABOUT</a></li>
+            <li class="mobile-dropdown">
+                <a href="{% url 'services'%}" class="mobile-nav-link">SERVICES</a>
+            </li>
+            <li><a href="#contact" class="mobile-nav-link">CONTACT US</a></li>
+        </ul>
+        <div class="mobile-contact">
+            <a href="https://wa.me/+919645129777?text=I%20would%20like%20to%20know%20about%20more!">
+                <i class="fab fa-whatsapp"></i> +91 96451 29777
+            </a>
+            <a href="mailto:info@devlokdevelopers.com?subject=Property%20Inquiry&body=Hello%20DEVLOK%2C%20I%27m%20interested%20in%20your%20properties.%20Please%20provide%20more%20details.">
+                <i class="fas fa-envelope"></i> info@devlokdevelopers.com
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero Carousel Section -->
+    <section class="hero">
+        <div class="swiper hero-carousel">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="{% static 'images/carousel1.jpeg' %}" alt="Luxury Pool Villa" class="hero-image desktop-img">
+                    <img src="{% static 'images/carousel1.jpeg' %}" alt="Luxury Pool Villa" class="hero-image mobile-img">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{% static 'images/logo.png' %}" alt="Modern Home" class="hero-image desktop-img">
+                    <img src="{% static 'images/devlok.jpeg' %}" alt="Modern Home" class="hero-image mobile-img">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{% static 'images/kerala.jpg' %}" alt="Modern Home" class="hero-image desktop-img">
+                    <img src="{% static 'images/flat.jpg' %}" alt="Modern Home" class="hero-image mobile-img">
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <div class="container-hero">
+            <div class="hero-content">
+                <!-- Hero content if needed -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <div class="about-container">
+                <div class="about-title">
+                    <h2>ABOUT DEVLOK</h2>
+                </div>
+                <div class="about-image-container">
+                    <img src="{% static 'images/logo.png' %}" alt="Modern skyscrapers" class="about-image" style="max-height: 400px;">
+                    <div class="about-text">
+                        <p>At DEVLOK, we are more than just a real estate agency; we are your trusted partner on your journey to finding the perfect property. Our mission is to simplify the real estate process and empower you with the knowledge and resources you need to make informed decisions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><br><br>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-choose-us">
+        <div class="container">
+            <h2>Why Choose Us</h2>
+            <p class="subtitle">Trusted by hundreds, we connect you with expert agents and the right properties — all
+                tailored to your needs and budget</p>
+
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon"><span class="material-icons">apartment</span></div>
+                    <h3>Find your Perfect Team</h3>
+                    <p>We help you find the perfect fit for your budget and requirements</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon"><i class="fas fa-user"></i></div>
+                    <h3>Experienced Agents</h3>
+                    <p>Our team has years of experience to deliver the best results</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon"><i class="fas fa-dollar"></i></div>
+                    <h3>Buy & Sell</h3>
+                    <p>We help with both buying and selling houses fast</p>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon"><i class="fas fa-trophy"></i></div>
+                    <h3>Get your best property</h3>
+                    <p>We guarantee to find you the best property</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stats-left">
+                    <div class="stat-box">
+                        <div class="stat-number">1100+</div>
+                        <div class="stat-label">Total Projects</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-number">11+</div>
+                        <div class="stat-label">Years of experience</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-number">1700+</div>
+                        <div class="stat-label">Happy Customers</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">Awards</div>
+                    </div>
+                    <div class="stats-text">
+                        We Work Together With Our Clients To Design And Construct Homes And Surroundings That Match
+                        Their Values And Way Of Life.
+                    </div>
+                </div>
+
+                <div class="stats-middle">
+                    <div class="stats-right">
+                        <img src="{%static 'images/pool2.jpg'%}" alt="Modern building" class="stats-right-image"
+                            style="max-height: 260px; max-width: 380px;border-radius: 8px;">
+                    </div>
+
+                </div>
+                <div class="stats-middle">
+                    <div class="stats-right">
+                        <img src="{%static 'images/plot.jpg'%}" alt="Modern building" class="stats-image">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="container">
+            <div class="services-container">
+                <div class="services-left">
+                    <img src="{%static 'images/plot-kerala.jpg'%}" alt="Modern apartment" class="services-image">
+
+                    <a href="{% url 'services' %}">
+                        <h3 class="services-title"
+                            style="text-decoration:none; color: #f9f9f9; text-decoration: underline;">OUR REAL ESTATE
+                            SERVICE</h3>
+                    </a>
+
+                    <div class="services-links">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-dHok_FwSglGODcHUytu085-fOsH4ON_4dNo5philQnxWvQ/viewform?pli=1"
+                            class="service-link">Property Listings</a>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-dHok_FwSglGODcHUytu085-fOsH4ON_4dNo5philQnxWvQ/viewform?pli=1"
+                            class="service-link">Buying Assistance</a>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-dHok_FwSglGODcHUytu085-fOsH4ON_4dNo5philQnxWvQ/viewform?pli=1"
+                            class="service-link">Selling Your Property</a>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-dHok_FwSglGODcHUytu085-fOsH4ON_4dNo5philQnxWvQ/viewform?pli=1"
+                            class="service-link">Investment Opportunities</a>
+                    </div>
+                </div>
+
+                <div class="services-right">
+                    <div class="services-right-content" style="background-color: #024882;">
+                        <img src="{%static 'images/home.jpg'%}" alt="Modern building" class="services-right-image">
+
+                        <p class="services-description">
+                            Explore our extensive portfolio of carefully curated properties. We provide detailed
+                            listings with high-quality photos and comprehensive information to help you find the perfect
+                            match for your needs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        /* Testimonial Section */
+        .testimonial-section {
+            padding: 60px 0;
+            background-color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .testimonial-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .testimonial-left {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .testimonial-right {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .testimonial-heading {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-description {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .rating-box {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .rating-item {
+            text-align: center;
+        }
+
+        .rating-number {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .rating-text {
+            color: #666;
+            font-size: 12px;
+        }
+
+        /* Customer Quote Box */
+        .customer-quote {
+            display: flex;
+            align-items: center;
+            background-color: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .customer-avatar {
+            width: 180px;
+            height: 220px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-right: 25px;
+            flex-shrink: 0;
+        }
+
+        .customer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .customer-content {
+            flex: 1;
+        }
+
+        .customer-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .customer-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .customer-title {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .quote-text {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .quote-icon {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            color: #ddd;
+        }
+
+        .quote-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .quote-button {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .customer-quote {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .customer-avatar {
+                width: 250px;
+                height: 280px;
+                margin-right: 0;
+                margin-bottom: 20px;
+                object-fit: fill;
+            }
+
+            .testimonial-container {
+                flex-direction: column;
+            }
+
+            .testimonial-left,
+            .testimonial-right {
+                width: 100%;
+            }
+        }
+
+        /* Brands Section */
+        .brands-section {
+            padding: 30px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        .brands-title {
+            text-align: center;
+            font-size: 14px;
+            color: #6a6a6a;
+            margin-bottom: 20px;
+        }
+
+        .brands-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        .brand-logo {
+            height: 40px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .brand-logo:hover {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+
+
+        .articles-section {
+            padding: 60px 0;
+            background-color: #fafafa;
+        }
+
+        .articles-heading {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .article-card {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover .article-image img {
+            transform: scale(1.05);
+        }
+
+        .article-content {
+            padding: 15px;
+        }
+
+        .article-category {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .article-date {
+            font-size: 12px;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .pagination-button {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Footer Section */
+        .footer {
+            background-color: #0047AB;
+            color: #fff;
+            padding: 80px 0 30px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .footer-section h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        .subscribe-form {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .subscribe-form .input {
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            width: 70%;
+            background-color: #fff;
+            color: #003f7d;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .subscribe-form button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            padding: 16px 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .subscribe-form button:hover {
+            background-color: #0055aa;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+
+        }
+
+        .social-icon {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            color: rgb(255, 255, 255);
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+            color: #ffffff;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #0047ab95;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.43);
+            z-index: 99;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #0047ab95;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.43);
+            z-index: 99;
+        }
+
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+
+
+            .brands-container {
+                justify-content: center;
+            }
+
+            .articles-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .footer-container {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .rating-box {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <section class="testimonial-section">
+        <div class="container testimonial-container">
+            <div class="testimonial-left">
+                <h2 class="testimonial-heading">What our customers are saying about us?</h2>
+                <p class="testimonial-description">DEVLOK turned our vision of a perfect home into reality. Their
+                    premium properties and top-notch service made the entire process a breeze!</p>
+
+                <div class="rating-box">
+                    <div class="rating-item">
+                        <div class="rating-number">1700+</div>
+                        <div class="rating-text">Happy People</div>
+                    </div>
+                    <div class="rating-item">
+                        <div class="rating-number">4.88</div>
+                        <div class="rating-text">Overall Rating</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-right">
+                <div class="customer-quote">
+                    <span class="quote-icon">"</span>
+                    <div class="customer-avatar">
+                        <img src="{%static 'images/client7.jpeg'%}" alt="Customer">
+                    </div>
+                    <div class="customer-content">
+                        <div class="customer-info">
+                            <div>
+                                <div class="customer-name">George</div>
+                                <div class="customer-title">Thrissur</div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="quote-text">DEVLOK made our dream home a reality! Their attention to detail and
+                                seamless
+                                process turned a complex purchase into a joyful experience. We're thrilled with our new
+                                property!
+                                — George, First-Time Homeowners</p>
+                        </div>
+                        <div class="quote-actions">
+                            <button class="quote-button"><i class="fas fa-chevron-left"></i></button>
+                            <button class="quote-button"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section class="brands-section">
+        <div class="container">
+            <div class="brands-title">Thousands of industry leading companies trust us</div>
+            <div class="brands-container">
+                <img src="{% static 'images/asset.png' %}" alt="Asset" class="brand-logo"
+                    style="width: 50px; height: 50px;">
+                <img src="{% static 'images/vishraamm.png' %}" alt="Vishraam" class="brand-logo"
+                    style="width: 50px; height: 50px;">
+                <img src="{% static 'images/veegaland-logo.png' %}" alt="Veegaland" class="brand-logo">
+                <img src="{% static 'images/sobha-logo.png' %}" alt="Shoba" class="brand-logo"
+                    style="width: 50px; height: 50px;">
+                <img src="{% static 'images/kalyan.png' %}" alt="Kalyan" class="brand-logo"
+                    style="width: 50px; height: 50px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Articles Section -->
+    <section class="articles-section">
+        <div class="container-a">
+            <h2 class="articles-heading">Recent Articles & News</h2>
+
+            <div class="articles-grid">
+                <div class="article-card">
+                    <div class="article-image">
+                        <img src="{% static 'images/client1.jpeg' %}" alt="Article 1">
+                    </div>
+                    <div class="article-content">
+                        <div class="article-category">Interior</div>
+                        <h3>Modern Interior Design</h3>
+                        <div class="article-date">April 12, 2021</div>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-image">
+                        <img src="{% static 'images/client2.jpeg' %}" alt="Article 2">
+                    </div>
+                    <div class="article-content">
+                        <div class="article-category">Apartment</div>
+                        <h3>Luxury Apartments</h3>
+                        <div class="article-date">February 28, 2023</div>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-image">
+                        <img src="{% static 'images/client3.jpeg' %}" alt="Article 3">
+                    </div>
+                    <div class="article-content">
+                        <div class="article-category">Office</div>
+                        <h3>Modern Office Spaces</h3>
+                        <div class="article-date">April 15, 2025</div>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-image">
+                        <img src="{% static 'images/client6.jpeg' %}" alt="Article 3">
+                    </div>
+                    <div class="article-content">
+                        <div class="article-category">Residential</div>
+                        <h3>Modern Residential Spaces</h3>
+                        <div class="article-date">December 3, 2024</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-section">
+                <h3>Get in Touch</h3>
+                <div class="subscribe-form">
+                    <p class="input">Enquiry Form</p>
+                    <a
+                        href="https://docs.google.com/forms/d/e/1FAIpQLSc-dHok_FwSglGODcHUytu085-fOsH4ON_4dNo5philQnxWvQ/viewform?pli=1"><button>
+                            <i class="fas fa-arrow-right"></i></button></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Discover</h3>
+                <ul class="footer-links">
+                    <li><a href="{% url 'index' %}"></a>Home</li>
+                    <li><a href="{% url 'about' %}">About</a></li>
+                    <li><a href="{% url 'services' %}">Services</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section" id="contact">
+                <h3>Contact Us</h3>
+                <a style="text-decoration: none; color: white;"
+                    href="https://wa.me/+919645129777?text=I%20would%20like%20to%20know%20about%20more!">
+                    <p>+91 96451 29777</p>
+                </a><br>
+                <a style="text-decoration: none; color: white;" href="tel:+919846845777">
+                    <p>+91 98468 45777</p>
+                </a><br>
+                <a style="text-decoration: none; color: white;"
+                    href="mailto:info@devlokdevelopers.com?subject=Property%20Inquiry&body=Hello%20DEVLOK%2C%20I%27m%20interested%20in%20your%20properties.%20Please%20provide%20more%20details.">
+                    <p>info@devlokdevelopers.com</p>
+                </a>
+            </div>
+
+            <div class="footer-section">
+                <h3>Our Address</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Nadathara Panchayath Building,<br>
+                            XII/479 Krishnan Master Nagar
+                        </a></li>
+                    <li><a href="#">Eravimangalam P.O, Thrissur - 680 751</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <div class="footer-logo">FOLLOW US</div>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/devlokdevelopers?igsh=MXhrbXQwcTBiNWpodQ=="
+                        class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/sanoop-vijayakumar-14b925283?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
+                        class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container footer-bottom">
+            <p>Copyright © 2025. All rights reserved.</p>
+        </div>
+    </footer>
+    <div class="whatsapp-float">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <style>
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        .whatsapp-float img {
+            width: 60px;
+            height: 60px;
+        }
+    </style>
+    <a href="https://wa.me/+919645129777?text=I%20would%20like%20to%20know%20about%20more!" target="_blank"
+        class=" back-to-top">
+        <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp Chat" />
+    </a>
+
+    <script>
+        // Back to top button functionality
+        document.querySelector('.whatsapp-float').addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Testimonial slider functionality
+        const prevButton = document.querySelector('.quote-button:first-child');
+        const nextButton = document.querySelector('.quote-button:last-child');
+
+        // Example testimonials data
+        const testimonials = [
+            {
+                name: "George",
+                location: "Thrissur",
+                text: "DEVLOK made our dream home a reality! Their attention to detail and seamless process turned a complex purchase into a joyful experience. We're thrilled with our new property! — George, First-Time Homeowners",
+                image: "{%static 'images/client7.jpeg'%}"
+            },
+            {
+                name: "Priya",
+                location: "Kochi",
+                text: "As an investor, I appreciate DEVLOK's market insights and premium property selections. Their team helped me find properties with excellent appreciation potential. Highly recommended! Thanks To DEVLOK Team.",
+                image: "{%static 'images/client5.jpeg'%}"
+            },
+            {
+                name: "Thomas",
+                location: "Kozhikode",
+                text: "The DEVLOK team went above and beyond to understand our needs. Their personalized approach and excellent after-sales service made us feel valued throughout our home buying journey.",
+                image: "{%static 'images/client4.jpeg'%}"
+            }
+        ];
+
+        let currentIndex = 0;
+
+        function updateTestimonial(index) {
+            const testimonial = testimonials[index];
+            document.querySelector('.customer-name').textContent = testimonial.name;
+            document.querySelector('.customer-title').textContent = testimonial.location;
+            document.querySelector('.quote-text').textContent = testimonial.text;
+            document.querySelector('.customer-avatar img').src = testimonial.image;
+        }
+
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+            updateTestimonial(currentIndex);
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % testimonials.length;
+            updateTestimonial(currentIndex);
+        });
+    </script>
+</body>
+
+</html>
