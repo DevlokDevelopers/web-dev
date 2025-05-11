@@ -125,28 +125,48 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const toggleBtn = document.querySelector('.toggle-btn');
-            const closeBtn = document.querySelector('.close-btn');
-            const mobileMenu = document.querySelector('.mobile-menu');
+            document.addEventListener('DOMContentLoaded', function () {
+                const toggleBtn = document.querySelector('.toggle-btn');
+                const closeBtn = document.querySelector('.close-btn');
+                const mobileMenu = document.querySelector('.mobile-menu');
+                
+                // Get all mobile navigation links
+                const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
-            toggleBtn.addEventListener('click', function () {
-                mobileMenu.classList.add('active');
-            });
+                toggleBtn.addEventListener('click', function () {
+                    mobileMenu.classList.add('active');
+                });
 
-            closeBtn.addEventListener('click', function () {
-                mobileMenu.classList.remove('active');
-            });
+                closeBtn.addEventListener('click', function () {
+                    mobileMenu.classList.remove('active');
+                });
 
-            // For mobile dropdown submenus (if needed)
-            const mobileDropdowns = document.querySelectorAll('.mobile-dropdown');
-            mobileDropdowns.forEach(dropdown => {
-                const link = dropdown.querySelector('.mobile-nav-link');
-                link.addEventListener('click', function (e) {
-                    dropdown.classList.toggle('active');
+                // Add click event listeners to all mobile nav links
+                mobileNavLinks.forEach(link => {
+                    link.addEventListener('click', function () {
+                        // Close the mobile menu when any link is clicked
+                        mobileMenu.classList.remove('active');
+                        
+                        // If it's a dropdown item, also handle that state
+                        const parentDropdown = this.closest('.mobile-dropdown');
+                        if (parentDropdown) {
+                            // If link is inside a dropdown and you want to toggle the dropdown
+                            // instead of immediately closing the whole menu, uncomment this:
+                            // parentDropdown.classList.toggle('active');
+                            // return false; // Prevent default only for dropdown toggles
+                        }
+                    });
+                });
+
+                // For mobile dropdown submenus (if needed)
+                const mobileDropdowns = document.querySelectorAll('.mobile-dropdown');
+                mobileDropdowns.forEach(dropdown => {
+                    const link = dropdown.querySelector('.mobile-nav-link');
+                    link.addEventListener('click', function (e) {
+                        dropdown.classList.toggle('active');
+                    });
                 });
             });
-        });
     </script>
 
     <style>
