@@ -15,6 +15,11 @@
 
     <!-- Before closing </body> -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.3.2/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.3.2/swiper-bundle.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.3.2/swiper-bundle.min.js"></script>
+
+
 
 </head>
 
@@ -26,7 +31,7 @@
             const heroSwiper = new Swiper('.hero-carousel', {
                 loop: true,
                 autoplay: {
-                    delay: 5000,
+                    delay: 4000,
                 },
                 pagination: {
                     el: '.swiper-pagination',
@@ -167,6 +172,23 @@
                     });
                 });
             });
+             document.addEventListener('DOMContentLoaded', function() {
+            // Intersection Observer for animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            // Observe elements with fade-in classes
+            document.querySelectorAll('.fade-in-left, .fade-in-right').forEach(el => {
+                observer.observe(el);
+            });
+        });
     </script>
 
     <style>
@@ -240,18 +262,35 @@
             .mobile-img {
                 display: block;
             }
+
+        }
+        
+        /* Swiper Customization */
+        .swiper-pagination {
+            bottom: 30px !important;
+        }
+        
+        .swiper-pagination-bullet {
+            width: 12px;
+            height: 12px;
+            background-color: white;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+        
+        .swiper-pagination-bullet-active {
+            width: 30px;
+            border-radius: 6px;
+            background-color: #0047AB;
+            opacity: 1;
         }
 
-        .hero-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
     </style>
     <style>
+        body {
+
+            background-color: #ffffff
+        }
         /* ===== Base Styles ===== */
         :root {
             --primary-color: #0047AB;
@@ -659,7 +698,7 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu" style="text-align: center;">
         <div class="mobile-menu-header" style="justify-content: center;">
-            <a href="/" class="logo" style="background-color: #0350a3; padding: 20px 50px 20px 50px; border-radius: 8px;">
+            <a href="/" class="logo" style="background-color: #0350a3; padding: 20px 40px 20px 50px; border-radius: 8px;">
                 <span class="logo-text" style="color: #ffffff; text-align: center;">DEVLOK</span>
                 <span class="logo-tagline" style="color: #ffffff; text-align: start;">Developers</span>
             </a>
@@ -692,22 +731,45 @@
         <div class="swiper hero-carousel">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <img src="{% static 'images/carousel1.jpeg' %}" alt="Luxury Pool Villa" class="hero-image desktop-img">
-                    <img src="{% static 'images/carousel1.jpeg' %}" alt="Luxury Pool Villa" class="hero-image mobile-img">
+                     
+                    <img src="{% static 'images/slide-2 (3).jpg' %}" alt="Luxury Pool Villa" class="hero-image desktop-img" style="object-fit:cover;" >
+                    <img src=" {% static 'images/slide-1 (5).jpg' %}" alt="Luxury Pool Villa" class="hero-image mobile-img">
                 </div>
                 <div class="swiper-slide">
-                    <img src="{% static 'images/logo.png' %}" alt="Modern Home" class="hero-image desktop-img">
-                    <img src="{% static 'images/devlok.jpeg' %}" alt="Modern Home" class="hero-image mobile-img">
+                     
+                    <img src="{% static 'images/slide-2 (2).jpg' %}" alt="Modern Home" class="hero-image desktop-img" style="object-fit:cover;" >
+                    <img src="{% static 'images/slide-1 (4).jpg' %}" alt="Modern Home" class="hero-image mobile-img">
                 </div>
                 <div class="swiper-slide">
-                    <img src="{% static 'images/kerala.jpg' %}" alt="Modern Home" class="hero-image desktop-img">
-                    <img src="{% static 'images/flat.jpg' %}" alt="Modern Home" class="hero-image mobile-img">
+                     
+                    <img src="{% static 'images/plot-kerala.jpg' %}" alt="Modern Home" class="hero-image desktop-img" style="object-fit:fill;" >
+                    <img src="{% static 'images/slide-1 (2).jpg' %}" alt="Modern Home" class="hero-image mobile-img">
                 </div>
             </div>
             <div class="swiper-pagination"></div>
+            <!-- Progress Circle -->
+            <div class="autoplay-progress">
+                <svg viewBox="0 0 48 48">
+                    <circle cx="24" cy="24" r="20"></circle>
+                </svg>
+                <span></span>
+            </div>
         </div>
         <div class="container-hero">
             <div class="hero-content">
+                 <div class="reveal-text">
+                    <h2 class="split-text">PROFESSIONAL REAL ESTATE   SERVICES</h2>
+                </div>
+                <div class="hero-tagline">
+                    <div class="line"></div>
+                    <p>EXPERT GUIDANCE</p>
+                </div><br><br><br>
+                <div class="hero-cta">
+                    <a href="#services" class="btn-3d">
+                        <span>Explore Devlok</span>
+                        <div class="btn-backdrop"></div>
+                    </a>
+                </div>
                 <!-- Hero content if needed -->
             </div>
         </div>
@@ -729,6 +791,82 @@
             </div>
         </div>
     </section><br><br>
+
+
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+        <div class="container">
+            <div class="services-container">
+                <div class="services-left">
+                    <img src="{%static 'images/slide-2 (1).jpg'%}" alt="Modern apartment" class="services-image">
+
+                    <a href="{% url 'services' %}">
+                        <h3 class="services-title"
+                            style="text-decoration:none; color: #f9f9f9; text-decoration: underline;">OUR REAL ESTATE
+                            SERVICE</h3>
+                    </a>
+
+                    <div class="services-links">
+                        
+                        <a href="#"
+                            class="service-link">Buy and Sell</a>
+                        <a href="#"
+                            class="service-link">Property Leasing</a>
+                        <a href="#"
+                            class="service-link">Corporate Real Estate</a>
+                        <a href="#"
+                            class="service-link">Get Expert Advice</a>
+                        <a href="#"
+                            class="service-link">Property Management</a>
+                    </div>
+                </div>
+
+                <div class="services-right">
+                    <div class="services-right-content" style="background-color: #024882;">
+                        <img src="{%static 'images/slide-1 (2).jpg'%}" alt="Modern building" class="services-right-image">
+
+                        <p class="services-description">
+                            Explore our extensive portfolio of carefully curated properties. We provide detailed
+                            listings with high-quality photos and comprehensive information to help you find the perfect
+                            match for your needs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Chairman's Message Section -->
+    <section class="chairman-section">
+        <div class="container">
+            <div class="chairman-container">
+                <div class="chairman-image fade-in-left">
+                    <!-- Replace with actual chairman's image -->
+                    <img src="{% static 'images/devlok.jpeg' %}" alt="Chairman of DEVLOK Real Estate" class="chairman-img">
+                </div>
+                <div class="chairman-message fade-in-right">
+                    <h2 class="section-title">OUR CHAIRMAN</h2>
+                    <div class="message-content">
+                        <p>Welcome to DEVLOK Real Estate, where we transform dreams into reality and properties into lasting investments.</p>
+                        
+                        <div class="message-quote">
+                            Our vision at DEVLOK is to redefine the real estate landscape by offering premium properties that blend luxury, sustainability, and strategic investment value.
+                        </div>
+                        
+                        <p>For over a decade, we have been committed to excellence in every project we undertake. Our team's dedication to quality, innovation, and customer satisfaction has established DEVLOK as a trusted name in the real estate sector.</p>
+                        
+                        <p>As we continue to grow and expand our portfolio, we remain focused on creating spaces that enhance lives, foster communities, and deliver exceptional returns. I invite you to explore our offerings and join the DEVLOK family.</p>
+                    </div>
+                    
+                    <div class="chairman-info">
+                        <h3 class="chairman-name">Sanoop</h3>
+                        <p class="chairman-designation">Chairman & Managing Director</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Why Choose Us Section -->
     <section class="why-choose-us">
@@ -766,7 +904,7 @@
     </section>
 
     <!-- Stats Section -->
-    <section class="stats-section">
+    <!-- <section class="stats-section">
         <div class="container">
             <div class="stats-container">
                 <div class="stats-left">
@@ -810,47 +948,7 @@
 
             </div>
         </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services-section">
-        <div class="container">
-            <div class="services-container">
-                <div class="services-left">
-                    <img src="{%static 'images/plot-kerala.jpg'%}" alt="Modern apartment" class="services-image">
-
-                    <a href="{% url 'services' %}">
-                        <h3 class="services-title"
-                            style="text-decoration:none; color: #f9f9f9; text-decoration: underline;">OUR REAL ESTATE
-                            SERVICE</h3>
-                    </a>
-
-                    <div class="services-links">
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-dHok_FwSglGODcHUytu085-fOsH4ON_4dNo5philQnxWvQ/viewform?pli=1"
-                            class="service-link">Property Listings</a>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-dHok_FwSglGODcHUytu085-fOsH4ON_4dNo5philQnxWvQ/viewform?pli=1"
-                            class="service-link">Buying Assistance</a>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-dHok_FwSglGODcHUytu085-fOsH4ON_4dNo5philQnxWvQ/viewform?pli=1"
-                            class="service-link">Selling Your Property</a>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-dHok_FwSglGODcHUytu085-fOsH4ON_4dNo5philQnxWvQ/viewform?pli=1"
-                            class="service-link">Investment Opportunities</a>
-                    </div>
-                </div>
-
-                <div class="services-right">
-                    <div class="services-right-content" style="background-color: #024882;">
-                        <img src="{%static 'images/home.jpg'%}" alt="Modern building" class="services-right-image">
-
-                        <p class="services-description">
-                            Explore our extensive portfolio of carefully curated properties. We provide detailed
-                            listings with high-quality photos and comprehensive information to help you find the perfect
-                            match for your needs.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    </section> -->
 
     <style>
         /* Testimonial Section */
@@ -1041,26 +1139,28 @@
 
         .brand-logo {
             height: 40px;
-            filter: grayscale(100%);
-            opacity: 0.7;
+            filter: grayscale(0);
+            opacity: 1;
             transition: all 0.3s ease;
         }
 
         .brand-logo:hover {
             filter: grayscale(0);
             opacity: 1;
+            animation: zoom 0.3s ease;
+            transform: scale(1.6);
         }
 
 
         .articles-section {
-            padding: 60px 0;
+            padding: 60px 30px;
             background-color: #fafafa;
         }
 
         .articles-heading {
-            font-size: 24px;
+            font-size: 30px;
             font-weight: 600;
-            margin-bottom: 30px;
+            margin-bottom: 50px;
             text-align: center;
         }
 
@@ -1080,24 +1180,25 @@
         }
 
         .article-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-2px);
         }
 
         .article-image {
             width: 100%;
-            height: 180px;
+            height: 300px;
             overflow: hidden;
+            align-items: center;
         }
 
         .article-image img {
             width: 100%;
-            height: 100%;
+            height: 300px;
             object-fit: cover;
             transition: transform 0.3s ease;
         }
 
         .article-card:hover .article-image img {
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .article-content {
@@ -1317,20 +1418,20 @@
                     premium properties and top-notch service made the entire process a breeze!</p>
 
                 <div class="rating-box">
-                    <div class="rating-item">
-                        <div class="rating-number">1700+</div>
-                        <div class="rating-text">Happy People</div>
-                    </div>
-                    <div class="rating-item">
-                        <div class="rating-number">4.88</div>
-                        <div class="rating-text">Overall Rating</div>
+                    <div class="rating-item" style="display: flex;">
+                        <div class="rating-number" style="margin-right: 2%;">170+
+                            <div class="rating-text">Happy Clients</div>
+                        </div>
+                        <div class="rating-number">4.88
+                            <div class="rating-text">Overall Rating</div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
 
             <div class="testimonial-right">
                 <div class="customer-quote">
-                    <span class="quote-icon">"</span>
                     <div class="customer-avatar">
                         <img src="{%static 'images/client7.jpeg'%}" alt="Customer">
                     </div>
@@ -1379,50 +1480,50 @@
     <!-- Recent Articles Section -->
     <section class="articles-section">
         <div class="container-a">
-            <h2 class="articles-heading">Recent Articles & News</h2>
+            <h2 class="articles-heading">Community Gallery</h2>
 
             <div class="articles-grid">
                 <div class="article-card">
                     <div class="article-image">
                         <img src="{% static 'images/client1.jpeg' %}" alt="Article 1">
-                    </div>
+                    <!-- </div>
                     <div class="article-content">
                         <div class="article-category">Interior</div>
                         <h3>Modern Interior Design</h3>
-                        <div class="article-date">April 12, 2021</div>
+                        <div class="article-date">April 12, 2021</div> -->
                     </div>
                 </div>
 
                 <div class="article-card">
                     <div class="article-image">
                         <img src="{% static 'images/client2.jpeg' %}" alt="Article 2">
-                    </div>
+                    <!-- </div>
                     <div class="article-content">
                         <div class="article-category">Apartment</div>
                         <h3>Luxury Apartments</h3>
-                        <div class="article-date">February 28, 2023</div>
+                        <div class="article-date">February 28, 2023</div> -->
                     </div>
                 </div>
 
                 <div class="article-card">
                     <div class="article-image">
                         <img src="{% static 'images/client3.jpeg' %}" alt="Article 3">
-                    </div>
+                    <!-- </div>
                     <div class="article-content">
                         <div class="article-category">Office</div>
                         <h3>Modern Office Spaces</h3>
-                        <div class="article-date">April 15, 2025</div>
+                        <div class="article-date">April 15, 2025</div> -->
                     </div>
                 </div>
 
                 <div class="article-card">
                     <div class="article-image">
                         <img src="{% static 'images/client6.jpeg' %}" alt="Article 3">
-                    </div>
+                    <!-- </div>
                     <div class="article-content">
                         <div class="article-category">Residential</div>
                         <h3>Modern Residential Spaces</h3>
-                        <div class="article-date">December 3, 2024</div>
+                        <div class="article-date">December 3, 2024</div> -->
                     </div>
                 </div>
             </div>
@@ -1446,9 +1547,9 @@
             <div class="footer-section">
                 <h3>Discover</h3>
                 <ul class="footer-links">
-                    <li><a href="{% url 'index' %}"></a>Home</li>
-                    <li><a href="{% url 'about' %}">About</a></li>
-                    <li><a href="{% url 'services' %}">Services</a></li>
+                    <li><a href="{% url 'index' %}"></a>HOME</li>
+                    <li><a href="{% url 'about' %}">ABOUT</a></li>
+                    <li><a href="{% url 'services' %}">SERVICES</a></li>
                 </ul>
             </div>
 
@@ -1553,7 +1654,7 @@
                 name: "Thomas",
                 location: "Kozhikode",
                 text: "The DEVLOK team went above and beyond to understand our needs. Their personalized approach and excellent after-sales service made us feel valued throughout our home buying journey.",
-                image: "{%static 'images/client4.jpeg'%}"
+                image: "{%static 'images/client8 (5).jpeg'%}"
             }
         ];
 
