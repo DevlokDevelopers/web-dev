@@ -793,7 +793,7 @@ body {
         }
         
         .chairman-img:hover {
-            transform: scale(1.02);
+            transform: scale(1);
         }
         
         /* Chairman's Message */
@@ -862,14 +862,14 @@ body {
         /* Animation classes */
         .fade-in-left {
             opacity: 0;
-            transform: translateX(-30px);
-            transition: all 0.8s ease;
+            transform: translateX(-10px);
+            transition: all 0.5s ease;
         }
         
         .fade-in-right {
             opacity: 0;
-            transform: translateX(30px);
-            transition: all 0.8s ease;
+            transform: translateX(10px);
+            transition: all 0.5s ease;
         }
         
         .in-view {
@@ -890,11 +890,11 @@ body {
             }
             
             .chairman-image {
-                max-width: 500px;
+                max-width: 450px;
                 margin: 0 auto;
             }
             .chairman-img {
-                width: 50vh;
+                width: 48vh;
                 height: 50vh;
                 border-radius: 5px;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -903,7 +903,7 @@ body {
             }
             
             .chairman-img:hover {
-                transform: scale(1.02);
+                transform: scale(1);
             }
         }
         
@@ -913,10 +913,10 @@ body {
             }
             
             .chairman-section {
-                padding: 60px 0;
+                padding: 55px 0;
             }
             .chairman-img {
-                width: 50vh;
+                width: 48vh;
                 height: 50vh;
                 border-radius: 5px;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -925,7 +925,7 @@ body {
             }
             
             .chairman-img:hover {
-                transform: scale(1.02);
+                transform: scale(1);
             }
         }
 

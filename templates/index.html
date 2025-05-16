@@ -860,7 +860,7 @@
                     </div>
                     
                     <div class="chairman-info">
-                        <h3 class="chairman-name">Sanoop Vijayakumar</h3>
+                        <h3 class="chairman-name">Sanoop P Vijayakumar</h3>
                         <p class="chairman-designation">Chairman & Managing Director</p>
                     </div>
                 </div>
@@ -1340,15 +1340,17 @@
             font-size: 12px;
             color: #ffffff;
         }
-
+        .back-to-top img{
+            width: 60px;
+            height: 60px;
+        }
         .back-to-top {
             position: fixed;
-            bottom: 30px;
+            bottom: 20px;
             right: 30px;
-            width: 40px;
-            height: 40px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            background-color: #0047ab95;
             color: #fff;
             display: flex;
             align-items: center;
@@ -1356,14 +1358,31 @@
             cursor: pointer;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.43);
             z-index: 99;
+            animation: blink 1s infinite;
+        }
+        
+        /* Blinking animation */
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1.5;
+            }
+            75% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+            25% {
+                opacity: 0.3;
+            }
         }
 
         .whatsapp-float {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background-color: #0047ab95;
             color: #fff;
@@ -1432,7 +1451,7 @@
             <div class="testimonial-right">
                 <div class="customer-quote">
                     <div class="customer-avatar">
-                        <img src="{%static 'images/client5.jpeg'%}" alt="Customer" style="object-fit: cover;">
+                        <img src="{%static 'images/client5.jpeg'%}" alt="Customer" style="object-fit: fill;">
                     </div>
                     <div class="customer-content">
                         <div class="customer-info">
@@ -1643,8 +1662,8 @@
                 image: "{%static 'images/client5.jpeg'%}"
             },
             {
-                name: "Swiggy ",
-                location: "Swiggy Adattu",
+                name: "Swiggy Franchise Owner",
+                location: "Adattu Franchise",
                 text: "DEVLOK Real Estate played a pivotal role in helping us secure the perfect infrastructure for our Adattu Road project. Their expertise, professionalism, and commitment to excellence ensured a seamless experience. We highly recommend their services for any real estate needs. — Swiggy Adattu Road Team",
                 image: "{%static 'images/client8 (1).jpeg'%}"
             },
